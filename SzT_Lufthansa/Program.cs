@@ -96,12 +96,10 @@ namespace SzT_Lufthansa {
                 l.Add(item.Value);
             }
 
-            for (int i = 0; i < l.Count-1; i++) {
-                for (int j = i; j < l.Count; j++) {
-                    if (l[i].osszSuly < l[j].osszSuly) {
-                        csaladiCsomagok sv = l[i];
-                        l[i] = l[j];
-                        l[j] = sv;
+            for (int i = 0; i < l.Count - 1; i++) {
+                for (int j = 0; j < l.Count - i - 1; j++) {
+                    if (l[j].osszSuly < l[j + 1].osszSuly) {
+                        (l[j], l[j + 1]) = (l[j + 1], l[j]);
                     }
                 }
             }
@@ -124,8 +122,13 @@ namespace SzT_Lufthansa {
         }
 
         static Kontener[] algoritmus(Dictionary<string, csaladiCsomagok> l, Kontener[] k) {
+            //foreach (KeyValuePair<string, csaladiCsomagok> item in l) {
+
+            
+            
             for (int i = 0; i < l.Count; i++) {
-                csaladiCsomagok cscs = nehez(l, i);
+                    csaladiCsomagok cscs = nehez(l, i);
+                //csaladiCsomagok cscs = item.Value;
 
                 double minCg = double.MaxValue;
                 int minI = -1;
@@ -152,6 +155,7 @@ namespace SzT_Lufthansa {
                     kk.betoltott.Add(cscs);
                     k[minI] = kk;
                 }
+            //}
             }
             return k;
         }
